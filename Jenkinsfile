@@ -24,19 +24,23 @@ pipeline {
              sh 'php artisan migrate'
              sh 'php artisan db:seed'
              sh 'php artisan key:generate'
-      }
+  
     }
+    }
+  
     stage('Execute Unit Tests') {
       steps {
-             sh './usr/bin/phpunit'
+             sh './vendor/bin/phpunit'
       } 
     }
+
     stage('Code Analysis') {
       steps {
         sh 'phploc app/ --log-csv build/logs/phploc.csv'
 
       }
     }
+
     stage('Plot Code Coverage Report') {
       steps {
 
