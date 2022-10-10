@@ -58,18 +58,16 @@ pipeline {
 
       }
     }
+
     stage('SonarQube Quality Gate') {
-      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
         environment {
-          scannerHome = tool 'SonarQubeScanner'
+            scannerHome = tool 'SonarQubeScanner'
         }
         steps {
-            withSonarQubeEnv('sornaqube') {
-                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner"
             }
-            timeout(time: 1, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-            }
+
         }
     }
 
